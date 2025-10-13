@@ -6,20 +6,21 @@ int main() {
     float gpa;
     cin >> gpa;
     if (gpa < 0.0 || gpa > 4.0) {
-        cout << "Invalid GPA input. Please enter a value between 0.0 and 4.0.\n";
+        cout << "Invalid GPA input. Please enter a value between 0.0 and 4.0 : ";
         cin >> gpa;
         if (gpa < 0.0 || gpa > 4.0) {
             cout << "Try again. Exiting program.\n";
             return 1;
         }
-    }  
-    cout << "Do you perhaps participate in any extracurricular activities? (1 for yes, 0 for no): ";
-    bool exChoice;
-    cin >> exChoice;
+    }
     cout << "How many credit hours do you have? : ";
     float credits;
     cin >> credits;
-    
+
+    cout << "Do you perhaps participate in any extracurricular activities? (true/false): ";
+    bool exChoice;
+    cin >> exChoice;
+
     if (gpa >= 3.5 && credits >= 30 )
         cout << "Congratulations, you qualify for our scholarship!\n";
     else if (gpa > 2.5 && exChoice)
