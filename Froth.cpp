@@ -13,19 +13,19 @@ int main() {
             return 1;
         }
     }  
-    cout << "Did you perhaps participate in any extracurricular activities? (1 for yes, 0 for no): ";
+    cout << "Do you perhaps participate in any extracurricular activities? (1 for yes, 0 for no): ";
     bool exChoice;
     cin >> exChoice;
-    cout << "How many hours of credits do you have? : ";
+    cout << "How many credit hours do you have? : ";
     float credits;
     cin >> credits;
     
     if (gpa >= 3.5 && credits >= 30 )
         cout << "Congratulations, you qualify for our scholarship!\n";
     else if (gpa > 2.5 && exChoice)
-        cout << "You are only Conditionally eligible for our scholarship.\n";
+        cout << "There's Hope! You are only Conditionally eligible for our scholarship.\n";
     else{
-        cout << "You're going to need to work harder in life.\n";
+        cout << "Too bad. You're going to need to work harder in life.\n";
     }
 
     return 0;
