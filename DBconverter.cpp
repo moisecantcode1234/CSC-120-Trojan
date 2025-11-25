@@ -1,152 +1,124 @@
 #include <iostream>
 #include <string>
+#include <cmath>
+#include <cstdlib>
 using namespace std;
 
-void convertDecimalToBinary();
-void convertBinaryToDecimal();
 
+void showMenu();
+int getMenuChoice();
+bool isValidBinary(string);
+bool isValidDecimal(string);
+string convertDecimalToBinary(int);
+int convertBinaryToDecimal(string);
+void processBinaryToDecimal();
+void processDecimalToBinary();
 
 int main () {
     cout << "Hello, User!" << endl;
-    cout << "Welcome to the DB Converter program." << endl;
+    cout << "Welcome to the DeBy Converter program.\n" << endl;
     cout << "This program will help you convert decimal number into binary and vice versa." << endl;
 
-    cout << "Make your choice (1 or 2): \n 1. Decimal to Binary \n 2. Binary to Decimal" << endl;
-    int choice;
-    cout << "Option: ";
-    cin >> choice;
-    if (choice == 1) {
-        convertDecimalToBinary();
-    } else if (choice == 2) {
-        convertBinaryToDecimal();
-    } else {
-        cout << "You can't follow instructions.\nGoodbye." << endl;
-        return 1;
-    }
+    int choice, count = 0;
+
+    do {
+        showMenu();
+        cout << "\nWould you like to perform another conversion? (1 = Yes, 0 = No)";
+        cout << "\nOption: ";
+        cin >> choice;
+        cout << endl;
+        count++;
+    } while (choice == 1);
+
+    cout << "You have performed " << count << " conversions!" << endl;
+    cout << "If you would like to start again, hit the F5 key...";
     return 0;
 }
 
-void convertDecimalToBinary() {
-    int decimalNumber;
-    cout << "Enter a positive integer (0 - 15): ";
+void showMenu() {
+    cout << "Make your choice (1 or 2): \n 1. Decimal to Binary \n 2. Binary to Decimal" << endl;
+    cout << "Option: ";
+    if (getMenuChoice() == 1)
+    {
+        cout << "Can I get a decimal number to convert to binary?\n" << endl;
+        processDecimalToBinary();
+    } else if (getMenuChoice() == 2) {
+        cout << "Can I get a binary number to convert to decimal?\n " << endl;
+        processBinaryToDecimal();
+    } else {
+        cout << "You can't follow instructions.\nGoodbye." << endl;
+    }
+} 
+
+int getMenuChoice() {
+    int choice;
+    cin >> choice;
+    return choice;
+}
+
+void processDecimalToBinary() {
+    int decimalNumber = 0;
     do {
+        cout << "Enter a positive integer: ";
         cin >> decimalNumber;
+    } while (!isValidDecimal(decimalNumber));
+    cout << "The binary equivalent of " << decimalNumber << " is " << convertDecimalToBinary(decimalNumber);
+}
+
+bool isValidDecimal(int decimalNumber) 
+{
+    do {
         if (decimalNumber < 0) {
-            cout << "Please enter a positive integer: ";
+            return false;
         }
     } while (decimalNumber < 0);
-    switch (decimalNumber) {
-        case 0:
-            cout << "The binary equivalent is: 0000" << endl;
-            break;
-        case 1:
-            cout << "The binary equivalent is: 0001" << endl;
-            break;
-        case 2:
-            cout << "The binary equivalent is: 0010" << endl;
-            break;
-        case 3:
-            cout << "The binary equivalent is: 0011" << endl;
-            break;
-        case 4:
-            cout << "The binary equivalent is: 0100" << endl;
-            break;
-        case 5:
-            cout << "The binary equivalent is: 0101" << endl;
-            break;
-        case 6:
-            cout << "The binary equivalent is: 0110" << endl;
-            break;
-        case 7:
-            cout << "The binary equivalent is: 0111" << endl;
-            break;
-        case 8:
-            cout << "The binary equivalent is: 1000" << endl;
-            break;
-        case 9:
-            cout << "The binary equivalent is: 1001" << endl;
-            break;
-        case 10:
-            cout << "The binary equivalent is: 1010" << endl;
-            break;
-        case 11:
-            cout << "The binary equivalent is: 1011" << endl;
-            break;
-        case 12:
-            cout << "The binary equivalent is: 1100" << endl;
-            break;
-        case 13:
-            cout << "The binary equivalent is: 1101" << endl;
-            break;
-        case 14:
-            cout << "The binary equivalent is: 1110" << endl;
-            break;
-        case 15:
-            cout << "The binary equivalent is: 1111" << endl;
-            break;
-        default:
-            cout << "Number out of range. Please enter a number between 0 and 15." << endl;
-    }
+    return true;
 }
 
-void convertBinaryToDecimal() {
-    int binaryNumber;
-        
+void processBinaryToDecimal() {
+    string binaryNumber;
     do {
-        cout << "Enter a positive binary number (0000 - 1111): ";
+        cout << "Enter a positive binary number: ";
         cin >> binaryNumber;
-    } while (to_string(binaryNumber).find_first_not_of("01") != string::npos);
-
-    switch (binaryNumber) {
-        case 0:
-            cout << "The decimal equivalent is: 0" << endl;
-            break;
-        case 1:
-            cout << "The decimal equivalent is: 1" << endl;
-            break;
-        case 10:
-            cout << "The decimal equivalent is: 2" << endl;
-            break;
-        case 11:
-            cout << "The decimal equivalent is: 3" << endl;
-            break;
-        case 100:
-            cout << "The decimal equivalent is: 4" << endl;
-            break;
-        case 101:
-            cout << "The decimal equivalent is: 5" << endl;
-            break;
-        case 110:
-            cout << "The decimal equivalent is: 6" << endl;
-            break;
-        case 111:
-            cout << "The decimal equivalent is: 7" << endl;
-            break;
-        case 1000:
-            cout << "The decimal equivalent is: 8" << endl;
-            break;
-        case 1001:
-            cout << "The decimal equivalent is: 9" << endl;
-            break;
-        case 1010:
-            cout << "The decimal equivalent is: 10" << endl;
-            break;
-        case 1011:
-            cout << "The decimal equivalent is: 11" << endl;
-            break;
-        case 1100:
-            cout << "The decimal equivalent is: 12" << endl;
-            break;
-        case 1101:
-            cout << "The decimal equivalent is: 13" << endl;
-            break;
-        case 1110:
-            cout << "The decimal equivalent is: 14" << endl;
-            break;
-        case 1111:
-            cout << "The decimal equivalent is: 15" << endl;
-            break;
-        default:
-            cout << "Invalid binary number. Please enter a number between 0000 and 1111." << endl;
-    }
+    } while (!isValidBinary(binaryNumber));
+    cout << "The decimal equivalent of " << binaryNumber << " is " << convertBinaryToDecimal(binaryNumber);
 }
+
+string convertDecimalToBinary(int decimalNumber) {
+    string binaryNumber;
+    int number = decimalNumber;
+    if (number == 0) {
+        binaryNumber = "0";
+    }else {
+        while (number > 0) {
+            binaryNumber = to_string(number % 2) + binaryNumber;
+            number /= 2;
+        }
+    }
+    return binaryNumber;
+}
+
+bool isValidBinary(string binaryNumber) {
+    do {
+        if (binaryNumber.find_first_not_of("01") != string::npos) {
+            cout << "Please enter a positive binary number: ";
+            cin >> binaryNumber;
+        }
+    } while (binaryNumber.find_first_not_of("01") != string::npos);
+    return true;
+}
+
+int convertBinaryToDecimal(string binaryNumber) {
+    int decimalNumber;
+
+    if (binaryNumber == "0")
+        decimalNumber = 0;
+    else {
+        for (int i = binaryNumber.length() - 1; i >= 0 ; i--)
+        {
+            decimalNumber += (binaryNumber.at(i) - '0') * pow(2, binaryNumber.length() - 1 - i);
+        }
+    }
+    return decimalNumber;
+}
+

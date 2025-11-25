@@ -1,0 +1,25 @@
+	{
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "build with cl.exe",
+				"type": "shell",
+				"command": "cl.exe", // Or the full path to cl.exe
+				"args": [
+					"/EHsc", // Example arguments for C++ compilation
+					"/Zi",
+					"/std:c++17",
+					"${file}",
+					"/Fe:${fileDirname}\\${fileBasenameNoExtension}.exe"
+				],
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				},
+				"presentation": {
+					"reveal": "always"
+				},
+				"problemMatcher": "$msCompile"
+			}
+		]
+	}
