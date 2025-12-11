@@ -1,25 +1,31 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include <cstdlib>
+#include <fstream>
+#include <array>
 using namespace std;
 
 
 void showMenu();
 int getMenuChoice();
 bool isValidBinary(string);
-bool isValidDecimal(string);
+bool isValidDecimal(int);
 string convertDecimalToBinary(int);
 int convertBinaryToDecimal(string);
 void processBinaryToDecimal();
 void processDecimalToBinary();
+void conversionHistory();
 
-int main () {
-    cout << "Hello, User!" << endl;
+ofstream outfile("Conversion_History.txt", ios::app);
+int arrayFiller(string arr[], int size);
+
+int Count = 0;  // Global variable to keep track of the number of conversions
+
+int main () { 
+    int choice;
+    cout << "\nHello, User!" << endl;
     cout << "Welcome to the DeBy Converter program.\n" << endl;
     cout << "This program will help you convert decimal number into binary and vice versa." << endl;
-
-    int choice, count = 0;
 
     do {
         showMenu();
@@ -27,26 +33,37 @@ int main () {
         cout << "\nOption: ";
         cin >> choice;
         cout << endl;
-        count++;
+        Count++;
     } while (choice == 1);
 
-    cout << "You have performed " << count << " conversions!" << endl;
+    cout << "You have performed " << Count << " conversions!" << endl;
     cout << "If you would like to start again, hit the F5 key...";
     return 0;
 }
 
 void showMenu() {
-    cout << "Make your choice (1 or 2): \n 1. Decimal to Binary \n 2. Binary to Decimal" << endl;
+    cout << "Make your choice (1 or 2): \n 1. Decimal to Binary \n 2. Binary to Decimal \n 3. Conversion History" << endl;
     cout << "Option: ";
-    if (getMenuChoice() == 1)
+    int choice = getMenuChoice();
+
+    switch (choice)
     {
+        case 1:
         cout << "Can I get a decimal number to convert to binary?\n" << endl;
         processDecimalToBinary();
-    } else if (getMenuChoice() == 2) {
+        break;
+        case 2:
         cout << "Can I get a binary number to convert to decimal?\n " << endl;
         processBinaryToDecimal();
-    } else {
+        break;
+        case 3:
+        cout << "Conversion history:" << endl;
+        conversionHistory();
+        break;
+        default:
         cout << "You can't follow instructions.\nGoodbye." << endl;
+        return;
+        break;
     }
 } 
 
@@ -63,6 +80,8 @@ void processDecimalToBinary() {
         cin >> decimalNumber;
     } while (!isValidDecimal(decimalNumber));
     cout << "The binary equivalent of " << decimalNumber << " is " << convertDecimalToBinary(decimalNumber);
+
+    outfile << "Decimal: " << decimalNumber << " -> Binary: " << convertDecimalToBinary(decimalNumber) << endl;
 }
 
 bool isValidDecimal(int decimalNumber) 
@@ -81,7 +100,10 @@ void processBinaryToDecimal() {
         cout << "Enter a positive binary number: ";
         cin >> binaryNumber;
     } while (!isValidBinary(binaryNumber));
+
     cout << "The decimal equivalent of " << binaryNumber << " is " << convertBinaryToDecimal(binaryNumber);
+
+    outfile << "Binary: " << binaryNumber << " -> Decimal: " << convertBinaryToDecimal(binaryNumber) << endl;
 }
 
 string convertDecimalToBinary(int decimalNumber) {
@@ -99,13 +121,11 @@ string convertDecimalToBinary(int decimalNumber) {
 }
 
 bool isValidBinary(string binaryNumber) {
-    do {
-        if (binaryNumber.find_first_not_of("01") != string::npos) {
-            cout << "Please enter a positive binary number: ";
-            cin >> binaryNumber;
-        }
-    } while (binaryNumber.find_first_not_of("01") != string::npos);
-    return true;
+    if (binaryNumber.find_first_not_of("01") != string::npos){
+        return false;
+    } else {
+        return true;
+    }
 }
 
 int convertBinaryToDecimal(string binaryNumber) {
@@ -122,3 +142,25 @@ int convertBinaryToDecimal(string binaryNumber) {
     return decimalNumber;
 }
 
+int arrayFiller(string arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        cout << "Enter element " << i + 1 << ": ";
+        cin >> arr[i];
+    }
+    return 0;
+}
+
+void conversionHistory() {
+    ifstream infile("Conversion_History.txt", ios::in);
+    string line;
+
+    if (!infile) {
+        cout << "No History found." << endl;
+        return;
+    }
+    while (getline(infile, line)) {
+        cout << line << endl;
+    }
+
+    infile.close();
+}
